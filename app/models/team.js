@@ -7,13 +7,14 @@ export default DS.Model.extend({
     homeGames: DS.hasMany('game', {inverse: "homeTeam"}),
     awayGames: DS.hasMany('game', {inverse: "awayTeam"}),
     games: union('homeGames', 'awayGames'),
+
     gamesDrawn: filterBy('games', 'isDraw'),
-    homeGamesWon: filterBy('games', 'isHomeWin'),
-    awayGamesWon: filterBy('games', 'isAwayWin'),
+    homeGamesWon: filterBy('homeGames', 'isHomeWin'),
+    awayGamesWon: filterBy('awayGames', 'isAwayWin'),
     gamesWon: union('homeGamesWon', 'awayGamesWon'),
 
-    homeGamesLost: filterBy('games', 'isAwayWin'),
-    awayGamesLost: filterBy('games', 'isHomeWin'),
+    homeGamesLost: filterBy('homeGames', 'isAwayWin'),
+    awayGamesLost: filterBy('awayGames', 'isHomeWin'),
     gamesLost: union('homeGamesLost', 'awayGamesLost'),
 
     homeGoalsScoredArray: mapBy('homeGames', 'homeGoals'),
@@ -35,5 +36,13 @@ export default DS.Model.extend({
 
     goalsConceded: computed('homeGoalsConceded', 'awayGoalsConceded', function(){
         return this.homeGoalsConceded + this.awayGoalsConceded;
+    }),
+
+    goalDifference: computed('goalsScored', 'goalsConceded', function(){
+        return this.goalsScored - this.goalsConceded;
+    }),
+
+    points: computed('gamesWon.length', 'gamesDrawn.length', function(){
+        return (this.gamesWon.length * 3) + this.gamesDrawn.length;
     })
 });

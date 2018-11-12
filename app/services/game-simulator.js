@@ -70,7 +70,7 @@ export default Service.extend({
             awayGoals,
             playedDate: new Date()
         });
-        later(this, this.simulateGame, DELAY_BETWEEN_GAMES);
+        // later(this, this.simulateGame, DELAY_BETWEEN_GAMES);
     },
     randomScore(maximumGoals){
         return Math.round((Math.random() * maximumGoals))
