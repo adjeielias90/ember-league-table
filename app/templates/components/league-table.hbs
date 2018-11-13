@@ -13,7 +13,7 @@
     <th>Form</th>
   </thead>
   <tbody>
-    {{#each @teams as |team index|}}
+    {{#each (sort-by "points" @teams) as |team index|}}
       <tr>
         <td>{{add 1 index}}</td>
         <td>{{team.name}}</td>
@@ -25,8 +25,7 @@
         <td>{{team.goalsConceded}}</td>
         <td>{{team.goalDifference}}</td>
         <td>{{team.points}}</td>
-        <td>1</td>
-        <td>1</td>
+        <td>FORM</td>
       </tr>
     {{/each}}
   </tbody>
