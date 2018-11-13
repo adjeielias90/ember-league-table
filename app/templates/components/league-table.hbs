@@ -13,7 +13,7 @@
     <th>Form</th>
   </thead>
   <tbody>
-    {{#each (sort-by "points" @teams) as |team index|}}
+    {{#each (sort-by "points:desc" @teams) as |team index|}}
       <tr>
         <td>{{add 1 index}}</td>
         <td>{{team.name}}</td>
